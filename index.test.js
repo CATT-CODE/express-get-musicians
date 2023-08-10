@@ -1,7 +1,7 @@
 // install dependencies
-const { execSync } = require('child_process');
-execSync('npm install');
-execSync('npm run seed');
+// const { execSync } = require('child_process');
+// execSync('npm install');
+// execSync('npm run seed');
 
 const request = require("supertest")
 const { db } = require('./db/connection');
@@ -13,10 +13,23 @@ const seedMusician = require("./seedData");
 describe('./musicians endpoint', () => {
     // Write your tests here
     
+    test("get all musicians endpoint", async () => {
+        const response = await request(app).get("/musicians");
+        const responseData = JSON.parse(response.text);
+
+        expect(response.statusCode).toBe(200);
+        expect(responseData.length).toBe(3)
+
+    })
+    test("/musician/:num get single musician with dynamic route endpoint", async () => {
+        const response = await request(app).get("/musician/1");
+        const responseData = JSON.parse(response.text);
+
+        expect(response.statusCode).toBe(200);
+        expect(responseData.name).toBe("Mick Jagger")
+
+    })
     
-
-
-
 
     
 })
